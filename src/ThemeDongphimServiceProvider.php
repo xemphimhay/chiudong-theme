@@ -26,7 +26,7 @@ class ThemeDongphimServiceProvider extends ServiceProvider
             'dongphim' => [
                 'name' => 'Dongphimv2',
                 'author' => 'contact.animehay@gmail.com',
-                'package_name' => 'ophimcms/theme-dongphim',
+                'package_name' => 'ggg3/theme-dongphim',
                 'publishes' => ['dongphim-assets'],
                 'preview_image' => '',
                 'options' => [
