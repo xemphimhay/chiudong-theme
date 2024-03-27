@@ -9,20 +9,19 @@
     $logo = array_pop($match);
 @endphp
 
-@push('header') 
+@push('header')
     {{-- @if(!(new \Jenssegers\Agent\Agent())->isDesktop())
         <link rel="stylesheet" type="text/css" href="/themes/dongphim/css/ipad.css?v=1.0.5" />
     @endif --}}
 
     <link href="{{ url('/') }}" rel="alternate" hreflang="vi">
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"
         integrity="sha512-AFwxAkWdvxRd9qhYYp1qbeRZj6/iTNmJ2GFwcxsMOzwwTaRwz2a/2TX225Ebcj3whXte1WGQb38cXE5j7ZQw3g=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
 
     <link href="/themes/dongphim/static/css/main.css?v=5" rel="stylesheet" media="all">
-    <link href="/themes/dongphim/static/css/ads.css" rel="stylesheet" media="all">
 
     <script>
         function detectMob() {
@@ -88,10 +87,10 @@
 
 @section('body')
     @include('themes::themedongphim.inc.header')
-   
+
     <div class="container">
         <div id="top_ads"></div>
-        
+
         @if (get_theme_option('ads_header'))
             {!! get_theme_option('ads_header') !!}
         @endif
@@ -101,9 +100,9 @@
             <div class="clear"></div> --}}
 
             @yield('breadcrumb')
-            @yield('content')            
+            @yield('content')
         </div>
-    </div>        
+    </div>
 @endsection
 
 @section('footer')
@@ -158,4 +157,40 @@
     </script><!--script src="https://api.flygame.io/sdk/widget/chill_tv.1856.js" async></script-->
 
     {!! setting('site_scripts_google_analytics') !!}
+    <script>
+        jQuery(document).ready(function() {
+            let timeoutID = null;
+            $("input[name=search]").keyup(function(e) {
+                clearTimeout(timeoutID);
+                var search = e.target.value;
+                if (search.length <= 2) {
+                    $(".search-suggest").hide();
+                    return false;
+                }
+                timeoutID = setTimeout(() => searching(search), 0)
+            });
+
+            function searching(search) {
+                $.ajax({
+                    type: "get",
+                    url: "/search/" + search,
+                    dataType: "json",
+                    success: function(response) {
+                        let results = "";
+                        $(".search-suggest").show();
+                        results += '<ul style="z-index: 100; display: block;" class="autocomplete-list">';
+                        results += '<li class="">Kết quả tìm kiếm cho từ khóa: <span>' + search + '</span></li>';
+                        for (let i = 0; i < response.data.length; i++) {
+                            const element = response.data[i];
+                            let img = `<img src="${element['thumb_url']}" alt="${element['name']}">`;
+                            let name = `<p>${element['name']}</p>`;
+                            results += '<div class="list-movie-ajax"><div class="movie-item"><a href="'+ element["url"] +'" title="'+ element["name"] +' class="ajax-thumb""><img class="search-img" src="'+ element["thumb_url"] +'" alt="'+ element["name"] +'"><div class="info"><div class="movie-title-1">'+ element["name"] +'</div><div class="movie-title-2">'+ element["origin_name"] +' ('+ element["publish_year"] +')</div><div class="movie-title-chap">'+ element["episode_current"] +' '+ element["language"] +'</div></div></a></div></div>';;
+                        }
+                        results += '<li class="ss-bottom" style="padding: 0; border-bottom: none;"><a href="/?search=' + search + '">Nhấn enter để tìm kiếm</a></li>';
+                        $(".search-suggest").html(results);
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

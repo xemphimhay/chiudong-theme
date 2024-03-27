@@ -9,22 +9,24 @@
         foreach ($lists as $list) {
             if (trim($list)) {
                 $list = explode('|', $list);
-                [$label, $field, $val, $limit, $sortKey, $alg] = array_merge($list, ['Phim hot', 'is_recommended', '1', 10, 'view_total', 'desc']);
+                [$label, $field, $val, $limit, $sortKey, $alg] = array_merge($list, [
+                    'Phim hot',
+                    'is_recommended',
+                    '1',
+                    10,
+                    'view_total',
+                    'desc',
+                ]);
                 try {
                     if ($field == 'random') {
-                        $movies = Movie::inRandomOrder()
-                            ->limit($limit)
-                            ->get();
+                        $movies = Movie::inRandomOrder()->limit($limit)->get();
                     } else {
-                        $movies = Movie::where($field, $val)
-                            ->orderBy($sortKey, $alg)
-                            ->limit($limit)
-                            ->get();
+                        $movies = Movie::where($field, $val)->orderBy($sortKey, $alg)->limit($limit)->get();
                     }
 
                     $data[] = [
                         'label' => $label,
-                        'data' => $movies
+                        'data' => $movies,
                     ];
                 } catch (\Exception $e) {
                     # code
@@ -45,7 +47,15 @@
         foreach ($lists as $list) {
             if (trim($list)) {
                 $list = explode('|', $list);
-                [$label, $relation, $field, $val, $limit, $link, $template] = array_merge($list, ['Phim mới cập nhật', '', 'type', 'series', 8, '/', 'block_thumb']);
+                [$label, $relation, $field, $val, $limit, $link, $template] = array_merge($list, [
+                    'Phim mới cập nhật',
+                    '',
+                    'type',
+                    'series',
+                    8,
+                    '/',
+                    'block_thumb',
+                ]);
                 try {
                     $data[] = [
                         'label' => $label,
@@ -73,18 +83,10 @@
 @endphp
 
 @section('content')
-    @include('themes::themedongphim.inc.slider_recommended')
-
     <div class="row">
-        <div class="col-md-wide-7 col-xs-1 padding-0">
-            @foreach ($data as $item)
-                @include('themes::themedongphim.inc.sections_movies')
-            @endforeach
-        </div>
-
-        <div class="col-md-wide-3 col-xs-1 myui-sidebar">
-            @include('themes::themedongphim.sidebar')
-        </div>
+        @include('themes::themedongphim.inc.slider_recommended')
+        @foreach ($data as $item)
+            @include('themes::themedongphim.inc.sections_movies')
+        @endforeach
     </div>
 @endsection
-

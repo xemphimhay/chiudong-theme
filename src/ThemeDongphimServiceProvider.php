@@ -18,6 +18,10 @@ class ThemeDongphimServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/assets' => public_path('themes/dongphim')
         ], 'dongphim-assets');
+
+        $this->publishes([
+            __DIR__ . '/../resources/views/errors' => base_path('resources/views/errors')
+        ], 'dongphim-error-page');
     }
 
     protected function setupDefaultThemeCustomizer()
@@ -27,7 +31,7 @@ class ThemeDongphimServiceProvider extends ServiceProvider
                 'name' => 'Dongphimv2',
                 'author' => 'contact.animehay@gmail.com',
                 'package_name' => 'ggg3/theme-dongphim',
-                'publishes' => ['dongphim-assets'],
+                'publishes' => ['dongphim-assets', 'dongphim-error-page'],
                 'preview_image' => '',
                 'options' => [
                     [
@@ -138,17 +142,8 @@ class ThemeDongphimServiceProvider extends ServiceProvider
                         'label' => 'Footer',
                         'type' => 'code',
                         'value' => <<<EOT
-                        <div class="myui-foot clearfix">
-                            <div class="container min">
-                                <div class="desc">
-                                    <p><b><a href="/">Xem phim online</a></b> miễn phí chất lượng cao với phụ đề tiếng việt - thuyết minh -
-                                        lồng tiếng. Mọt phim có nhiều thể loại phim phong phú, đặc sắc, nhiều bộ phim hay nhất - mới nhất.
-                                    </p>
-                                    <p>Website dongphim với giao diện trực quan, thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các
-                                        bộ phim mới hứa hẹn sẽ đem lại những trải nghiệm tốt cho người dùng.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="myui-foot clearfix"><div class="container min"><div class="row"><div class="col-12"><h1 style="font-size:100%"><span class="text-logo"><b>DONGCHILL.CO</b></span> Nơi cập nhật những bộ phim mới hot nhất hiện nay.</h1><p>DONGCHILL.CO nơi cung cấp cho người dùng những bộ phim chất lượng cao từ các quốc gia trên thế giới, bao gồm Hàn Quốc, Trung Quốc, Thái Lan và Nhật Bẚn.</p><p>DONGCHILL.CO cung cấp đa dạng thể loại phim, từ tình cẚm, hành động, giẚ tưởng đến kinh dị...</p><p>Ngoài ra, người dùng có thể dễ dàng tìm kiếm phim theo từng quốc gia, giúp cho việc tìm kiếm giẚi trí hoàn toàn dễ dàng.</p><p>Với những bộ phim chất lượng cao và đa dạng sự lựa chọn của website, các tín đồ film sẽ không thể bỏ qua trang web vô cùng hữu ích này.</p></div><!--div class="col-12"><ul><li>Liên hệ lên hệ quảng cáo telegram: </li></ul></div--></div></div></div>
+                        <div class="myui-foot clearfix"><div class="row"><div class="col-pd text-center"><p class="margin-0">© 2023 Copyright <a href="https://dongchill.co"><b>DONGCHILL.CO</b></a>. All Rights reserved.</p></div></div></div>
                         EOT,
                         'tab' => 'Custom HTML'
                     ],

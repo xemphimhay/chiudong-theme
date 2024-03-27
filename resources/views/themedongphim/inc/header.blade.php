@@ -8,11 +8,8 @@
 <header class="myui-header__top clearfix" id="header-top">
     <div class="container">
         <div class="myui_custom_header">
-            <button class="m-nav-open" type="button">
-                <svg><use xlink:href="/themes/dongphim/static/sprite.svg#icon-menu"></use></svg>
-            </button>
             <div class="myui-header__logo">
-                <a class="logo" href="/"><h1>{!! $brand !!}</h1></a>
+                <a class="logo" href="/">{!! $brand !!}</a>
             </div>
             <div class="myui-header__search">
                 <div class="container">
@@ -26,14 +23,15 @@
                                         name="search"
                                         class="search_wd form-control"
                                         value="{{ request('search') }}"
-                                        placeholder="V.d: tên phim, tên diễn viên..." 
-                                        autocomplete="off" 
+                                        placeholder="V.d: tên phim, tên diễn viên..."
+                                        autocomplete="off"
                                         />
-                                        
+
                                     <button class="submit search_submit icon-btn" id="searchbutton" type="submit" name="submit">
                                         <svg><use xlink:href="/themes/dongphim/static/sprite.svg#icon-search"></use></svg>
                                     </button>
                                 </form>
+                                <div style="display: block;" class="search-dropdown-hot dropdown-box bottom fadeInDown search-suggest"></div>
                                 <div class="search-dropdown-hot dropdown-box bottom fadeInDown"></div>
                             </li>
                         </ul>
@@ -41,7 +39,7 @@
                 </div>
             </div>
 
-            <div id="box-user-menu" class="actions-user right">
+            {{-- <div id="box-user-menu" class="actions-user right">
                 <div><a onclick="alert('Chức năng này đang cập nhật');return false;"><svg
                             class="icon icon--white icon-sign-in">
                             <use xlink:href="/themes/dongphim/static/users.svg#sign-in"></use>
@@ -57,9 +55,10 @@
                             <use xlink:href="/themes/dongphim/static/users.svg#bookmark"></use>
                         </svg>
                         Bookmark</a></div>
-            </div>
+            </div> --}}
         </div>
         <div class="mobile-control">
+            <div class="menu control icon-btn" data-type="toggle" data-target=".nav"><svg><use xlink:href="/themes/dongphim/static/sprite.svg#icon-menu"></use></svg></div>
             <div class="search control icon-btn" data-type="toggle" data-target="#search">
                 <svg><use xlink:href="/themes/dongphim/static/sprite.svg#icon-search2"></use></svg>
             </div>
@@ -79,7 +78,7 @@
                                 <ul class="sub">
                                     @foreach ($item['children'] as $children)
                                         <li><a href="{{ $children['link'] }}" title="{{ $children['name'] }}">{{ $children['name'] }}</a></li>
-                                    @endforeach                                        
+                                    @endforeach
                                 </ul>
                             </li>
                         @else

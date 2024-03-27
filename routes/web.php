@@ -57,4 +57,5 @@ Route::group([
     Route::get(setting('site_routes_movie', '/phim/{movie}'), [ThemeDongphimController::class, 'getMovieOverview'])
         ->where(['movie' => '.+', 'id' => '[0-9]+'])
         ->name('movies.show');
+    Route::get('/search/{search}', [ThemeDongphimController::class, 'search'])->name('search');
 });

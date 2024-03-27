@@ -64,6 +64,22 @@ class ThemeDongphimController
         ]);
     }
 
+    public function search(Request $request, string $search)
+    {
+        $data = Movie::where('name', 'like', '%' . $search . '%')
+            ->orWhere('origin_name', 'like', '%' . $search  . '%')
+            ->orderBy('name', 'desc')
+            ->take(10)
+            ->get();
+
+        foreach ($data as $key => &$item) {
+            $data[$key]['url'] = $item->getUrl();
+            $data[$key]['thumb_url'] = $item->getThumbUrl();
+        }
+
+        return response()->json(['data' => $data]);
+    }
+
     public function getMovieOverview(Request $request)
     {
         /** @var Movie */
