@@ -186,7 +186,7 @@
                             let name = `<p>${element['name']}</p>`;
                             results += '<div class="list-movie-ajax"><div class="movie-item"><a href="'+ element["url"] +'" title="'+ element["name"] +' class="ajax-thumb""><img class="search-img" src="'+ element["thumb_url"] +'" alt="'+ element["name"] +'"><div class="info"><div class="movie-title-1">'+ element["name"] +'</div><div class="movie-title-2">'+ element["origin_name"] +' ('+ element["publish_year"] +')</div><div class="movie-title-chap">'+ element["episode_current"] +' '+ element["language"] +'</div></div></a></div></div>';;
                         }
-                        results += '<li class="ss-bottom" style="padding: 0; border-bottom: none;"><a href="/?search=' + search + '">Nhấn enter để tìm kiếm</a></li>';
+                        results += '<li class="ss-bottom" style="padding: 0;border-bottom: none;display: block;width: 100%;height: 40px;line-height: 40px; background: #f44336; color: #fff; font-weight: 700;text-align: center;"><a href="/?search=' + search + '">Nhấn enter để tìm kiếm</a></li>';
                         $(".search-suggest").html(results);
                     }
                 });
