@@ -3,14 +3,14 @@
 @php
     $menu = \Ophim\Core\Models\Menu::getTree();
     $logo = setting('site_logo', '');
-    preg_match( '@src="([^"]+)"@' , $logo, $match );
+    preg_match('@src="([^"]+)"@', $logo, $match);
 
     // will return /images/image.jpg
     $logo = array_pop($match);
 @endphp
 
 @push('header')
-    {{-- @if(!(new \Jenssegers\Agent\Agent())->isDesktop())
+    {{-- @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
         <link rel="stylesheet" type="text/css" href="/themes/dongphim/css/ipad.css?v=1.0.5" />
     @endif --}}
 
@@ -18,8 +18,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"
         integrity="sha512-AFwxAkWdvxRd9qhYYp1qbeRZj6/iTNmJ2GFwcxsMOzwwTaRwz2a/2TX225Ebcj3whXte1WGQb38cXE5j7ZQw3g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link href="/themes/dongphim/static/css/main.css?v=5" rel="stylesheet" media="all">
 
@@ -56,7 +55,9 @@
         }
 
         @media all and (min-width: 813px) {
-            .m-nav, .m-nav-over {
+
+            .m-nav,
+            .m-nav-over {
                 display: none !important;
             }
         }
@@ -102,12 +103,24 @@
             @yield('breadcrumb')
             @yield('content')
         </div>
+        @if (get_theme_option('ads_preload'))
+            {!! get_theme_option('ads_preload') !!}
+        @endif
     </div>
 @endsection
 
 @section('footer')
     @if (get_theme_option('ads_catfish'))
-        {!! get_theme_option('ads_catfish') !!}
+        <div id="catfish" style="width: 100%;position:fixed;bottom:0;left:0;z-index:222" class="mp-adz">
+            <div style="margin:0 auto;text-align: center;overflow: visible;" id="container-ads">
+                <div id="hide_catfish"><a
+                        style="font-size:12px; font-weight:bold;background: #ff8a00; padding: 2px; color: #000;display: inline-block;padding: 3px 6px;color: #FFF;background-color: rgba(0,0,0,0.7);border: .1px solid #FFF;"
+                        onclick="jQuery('#catfish').fadeOut();">Đóng quảng cáo</a></div>
+                <div id="catfish_content" style="z-index:999999;">
+                    {!! get_theme_option('ads_catfish') !!}
+                </div>
+            </div>
+        </div>
     @endif
 
     {!! get_theme_option('footer') !!}
@@ -123,7 +136,7 @@
     <div id="fb-root"></div>
 
     <script>
-        window.fbAsyncInit = function () {
+        window.fbAsyncInit = function() {
             FB.init({
                 appId: '{{ setting('social_facebook_app_id') }}',
                 xfbml: true,
@@ -132,7 +145,7 @@
             FB.AppEvents.logPageView();
         };
 
-        (function (d, s, id) {
+        (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {
                 return;
@@ -145,7 +158,7 @@
     </script>
 
     <script>
-        $('body').on('click', '.nav-tabs li a', function () {
+        $('body').on('click', '.nav-tabs li a', function() {
             var tabactive = $(this).attr('href');
             $(this).closest('.nav-tabs').find('li').removeClass('active');
             $(this).parent().addClass('active');
@@ -178,15 +191,28 @@
                     success: function(response) {
                         let results = "";
                         $(".search-suggest").show();
-                        results += '<ul style="z-index: 100; display: block;" class="autocomplete-list">';
-                        results += '<li class="">Kết quả tìm kiếm cho từ khóa: <span>' + search + '</span></li>';
+                        results +=
+                            '<ul style="z-index: 100; display: block;" class="autocomplete-list">';
+                        results += '<li class="">Kết quả tìm kiếm cho từ khóa: <span>' + search +
+                            '</span></li>';
                         for (let i = 0; i < response.data.length; i++) {
                             const element = response.data[i];
                             let img = `<img src="${element['thumb_url']}" alt="${element['name']}">`;
                             let name = `<p>${element['name']}</p>`;
-                            results += '<div class="list-movie-ajax"><div class="movie-item"><a href="'+ element["url"] +'" title="'+ element["name"] +' class="ajax-thumb""><img class="search-img" src="'+ element["thumb_url"] +'" alt="'+ element["name"] +'"><div class="info"><div class="movie-title-1">'+ element["name"] +'</div><div class="movie-title-2">'+ element["origin_name"] +' ('+ element["publish_year"] +')</div><div class="movie-title-chap">'+ element["episode_current"] +' '+ element["language"] +'</div></div></a></div></div>';;
+                            results +=
+                                '<div class="list-movie-ajax"><div class="movie-item"><a href="' +
+                                element["url"] + '" title="' + element["name"] +
+                                ' class="ajax-thumb""><img class="search-img" src="' + element[
+                                    "thumb_url"] + '" alt="' + element["name"] +
+                                '"><div class="info"><div class="movie-title-1">' + element["name"] +
+                                '</div><div class="movie-title-2">' + element["origin_name"] + ' (' +
+                                element["publish_year"] + ')</div><div class="movie-title-chap">' +
+                                element["episode_current"] + ' ' + element["language"] +
+                                '</div></div></a></div></div>';;
                         }
-                        results += '<li class="ss-bottom" style="padding: 0;border-bottom: none;display: block;width: 100%;height: 40px;line-height: 40px; background: #f44336; color: #fff; font-weight: 700;text-align: center;"><a href="/?search=' + search + '">Nhấn enter để tìm kiếm</a></li>';
+                        results +=
+                            '<li class="ss-bottom" style="padding: 0;border-bottom: none;display: block;width: 100%;height: 40px;line-height: 40px; background: #f44336; color: #fff; font-weight: 700;text-align: center;"><a href="/?search=' +
+                            search + '">Nhấn enter để tìm kiếm</a></li>';
                         $(".search-suggest").html(results);
                     }
                 });
