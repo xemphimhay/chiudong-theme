@@ -79,12 +79,26 @@
         }
         return $data;
     });
+    $phimbomoi = Cache::remember('site.movies.phimbomoi', setting('site_cache_ttl', 5 * 60), function () {
+        return Movie::where('type', 'series')
+            ->limit('12')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+    });
+
+    $phimlemoi = Cache::remember('site.movies.phimlemoi', setting('site_cache_ttl', 5 * 60), function () {
+        return Movie::where('type', 'single')
+            ->limit('12')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+    });
 
 @endphp
 
 @section('content')
     <div class="row">
         @include('themes::themedongphim.inc.slider_recommended')
+        @include('themes::themedongphim.inc.tabhome')
         @foreach ($data as $item)
             @include('themes::themedongphim.inc.sections_movies')
         @endforeach
